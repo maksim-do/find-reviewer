@@ -39,7 +39,7 @@ const Answer = (answerProps) => {
         return (
           <>
             <AnswerCardCurrentUser user={currentUser} />
-            {(reviewer === null || reviewer === undefined) && <AnswerNotAnswer text="The reviewer was not found" />}
+            {(reviewer === null) && <AnswerNotAnswer text="The reviewer was not found" />}
             {(reviewer !== null) && <AnswerCardReviewer user={reviewer} />}
             <AnswerCardContributors contributors={contributors} />
           </>
