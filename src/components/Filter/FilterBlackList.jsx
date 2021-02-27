@@ -1,11 +1,5 @@
 import React, { useState, useRef } from 'react';
-
-const getId = () => {
-  const min = 0;
-  const max = 1679615;
-  const int = Math.floor(Math.random() * (max - min + 1)) + min;
-  return int.toString(36);
-};
+import getId from './getRandomID';
 
 const isContainValue = (arr, el) => {
   const values = arr.map(({ value }) => value);
@@ -27,7 +21,7 @@ const FilterBlackList = (blackListProps) => {
   const onClick = (e) => {
     e.preventDefault();
     if (!isContainValue(blackList, valueInput) && valueInput !== '') {
-      addElBlackList([{ id: getId(), value: valueInput }, ...blackList]);
+      addElBlackList([{ id: getId(blackList), value: valueInput }, ...blackList]);
     }
     setValue('');
     inputEl.current.focus();
