@@ -31,6 +31,11 @@ const Answer = (answerProps) => {
     case 'answer': {
       getTest = (el) => {
         const { reviewer, contributors, currentUser } = el;
+        if (reviewer === undefined) {
+          return () => (
+            <AnswerNotAnswer text="Something went wrong" />
+          );
+        }
         return (
           <>
             <AnswerCardCurrentUser user={currentUser} />
