@@ -10,27 +10,45 @@ const Answer = (answerProps) => {
   const { result, response } = data;
   /* компонент формируется в зависимости от типа ответа, допускается что текущий пользователь
   может быть сам себе ревьювер */
-  const answerData = {
-    notQuery: () => null,
-    error: (el) => (
-      <AnswerNotAnswer text={el} />
-    ),
-    notAnswer: (el) => (
-      <AnswerNotAnswer text={el} />
-    ),
-    answer: (el) => {
-      const { reviewer, contributors, currentUser } = el;
-      return (
-        <>
-          <AnswerCardCurrentUser user={currentUser} />
-          {(reviewer === null || reviewer === undefined) && <AnswerNotAnswer text="The reviewer was not found" />}
-          {(reviewer !== null) && <AnswerCardReviewer user={reviewer} />}
-          <AnswerCardContributors contributors={contributors} />
-        </>
+  let getTest;
+  switch (result) {
+    case 'error': {
+      getTest = (el) => (
+        <AnswerNotAnswer text={el} />
       );
-    },
-  };
-  const card = answerData[result](response);
+      break;
+    }
+    case 'notAnswer': {
+      getTest = (el) => (
+        <AnswerNotAnswer text={el} />
+      );
+      break;
+    }
+    case 'notQuery': {
+      getTest = () => null;
+      break;
+    }
+    case 'answer': {
+      getTest = (el) => {
+        const { reviewer, contributors, currentUser } = el;
+        return (
+          <>
+            <AnswerCardCurrentUser user={currentUser} />
+            {(reviewer === null || reviewer === undefined) && <AnswerNotAnswer text="The reviewer was not found" />}
+            {(reviewer !== null) && <AnswerCardReviewer user={reviewer} />}
+            <AnswerCardContributors contributors={contributors} />
+          </>
+        );
+      };
+      break;
+    }
+    default:
+      getTest = () => (
+        <AnswerNotAnswer text="Something went wrong" />
+      );
+      break;
+  }
+  const card = getTest(response);
   return card;
 };
 
