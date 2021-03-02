@@ -1,10 +1,7 @@
 import React, { useState, useRef } from 'react';
 import getId from './getRandomID';
 
-const isContainValue = (arr, el) => {
-  const values = arr.map(({ value }) => value);
-  return values.includes(el);
-};
+const isContainValue = (arr, el) => arr.map(({ value }) => value).includes(el);
 
 const FilterElBlackList = (elProps) => {
   const { id, value, removeEl } = elProps;
