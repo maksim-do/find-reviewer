@@ -8,35 +8,28 @@ import AnswerNotAnswer from './AnswerNotAnswer';
 const Answer = (answerProps) => {
   const { data } = answerProps;
   const { result, response } = data;
-  /* компонент формируется в зависимости от типа ответа, допускается что текущий пользователь
-  может быть сам себе ревьювер */
-  let getTest;
+  /* 1 компонент формируется в зависимости от типа ответа, допускается что текущий пользователь
+  может быть сам себе ревьювер
+     2 переменную не инициализирую для явного выделения состояния 'notQuery',
+     3 состояние 'error' выделил отдельно, планирую потом добавить отдельную логику обработки
+     4 наличие секции default по стайлгайду обязательно */
+  let content;
   switch (result) {
-    case 'error': {
-      getTest = (el) => (
-        <AnswerNotAnswer text={el} />
-      );
-      break;
-    }
+    case 'error':
     case 'notAnswer': {
-      getTest = (el) => (
-        <AnswerNotAnswer text={el} />
-      );
+      content = <AnswerNotAnswer text={response} />;
       break;
     }
     case 'notQuery': {
-      getTest = () => null;
+      content = null;
       break;
     }
     case 'answer': {
-      getTest = (el) => {
-        const { reviewer, contributors, currentUser } = el;
-        if (reviewer === undefined) {
-          return () => (
-            <AnswerNotAnswer text="Something went wrong" />
-          );
-        }
-        return (
+      const { reviewer, contributors, currentUser } = response;
+      /* костыль с <AnswerNotAnswer text="Something went wrong" /> */
+      content = reviewer === undefined
+        ? <AnswerNotAnswer text="Something went wrong" />
+        : (
           <>
             <AnswerCardCurrentUser user={currentUser} />
             {(reviewer === null) && <AnswerNotAnswer text="The reviewer was not found" />}
@@ -44,17 +37,13 @@ const Answer = (answerProps) => {
             <AnswerCardContributors contributors={contributors} />
           </>
         );
-      };
       break;
     }
     default:
-      getTest = () => (
-        <AnswerNotAnswer text="Something went wrong" />
-      );
+      content = <AnswerNotAnswer text="Something went wrong" />;
       break;
   }
-  const card = getTest(response);
-  return card;
+  return content;
 };
 
 export default Answer;
