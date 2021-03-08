@@ -21,7 +21,7 @@ const getAnswerData = async (dispatch, getState) => {
       ? [...contributorsData, currentUserData]
       : contributorsData;
     const reviewerData = getReviewerData(contributorsData, blackList);
-    const reviewer = reviewerData.id;
+    const reviewer = reviewerData === null ? null : reviewerData.id;
     dispatch(updateTaskSuccess(
       {
         contributors,
