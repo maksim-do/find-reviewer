@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const AnswerCardContributor = (data) => {
   const { user } = data;
@@ -16,9 +17,11 @@ const AnswerCardContributor = (data) => {
   );
 };
 
-const AnswerCardContributors = (data) => {
-  const { contributors } = data;
-  const listContributors = contributors
+const AnswerCardContributors = () => {
+  const data = useSelector((state) => state.answerData);
+  const { contributors, users } = data;
+  const contributorsDataList = users.filter(({ id }) => contributors.includes(id));
+  const listContributors = contributorsDataList
     .map((el) => <AnswerCardContributor key={el.id} user={el} />);
   return (
     <div className="card col-12 border-0">

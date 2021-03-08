@@ -1,35 +1,44 @@
-import React, { useState, useRef } from 'react';
-import getId from './getRandomID';
+import React, { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItemBlackList, removeItemBlackList } from '../../action/index';
 
 const isContainValue = (arr, el) => arr.map(({ value }) => value).includes(el);
 
 const FilterElBlackList = (elProps) => {
-  const { id, value, removeEl } = elProps;
+  const { value, removeEl } = elProps;
   return (
-    <a href="/#" className="list-group-item list-group-item-action" onClick={removeEl(id)}>{value}</a>
+    <a href="/#" className="list-group-item list-group-item-action" onClick={removeEl(value)}>{value}</a>
   );
 };
 
-const FilterBlackList = (blackListProps) => {
-  const [valueInput, setValue] = useState('');
+const FilterBlackList = () => {
+  const blackList = useSelector((state) => state.filterData.blackList);
+  const dispatch = useDispatch();
   const inputEl = useRef(null);
-  const onChange = (e) => { setValue(e.target.value); };
-  const { blackList, addElBlackList, removeEl } = blackListProps;
-  const onClick = (e) => {
+  const handleAddItem = (e) => {
     e.preventDefault();
+    const valueInput = inputEl.current.value;
     if (!isContainValue(blackList, valueInput) && valueInput !== '') {
-      addElBlackList([{ id: getId(blackList), value: valueInput }, ...blackList]);
+      dispatch(addItemBlackList({ item: valueInput }));
     }
-    setValue('');
+    inputEl.current.value = '';
     inputEl.current.focus();
   };
 
-  const list = blackList.map(({ id, value }) => (
+  const handleRemoveItem = (item) => (e) => {
+    e.preventDefault();
+    dispatch(removeItemBlackList({ item }));
+  };
+
+  const enterDown = (e) => {
+    if (e.keyCode === 13) e.preventDefault();
+  };
+
+  const list = blackList.map((value) => (
     <FilterElBlackList
-      key={id}
-      id={id}
+      key={value}
       value={value}
-      removeEl={removeEl}
+      removeEl={handleRemoveItem}
     />
   ));
 
@@ -39,10 +48,10 @@ const FilterBlackList = (blackListProps) => {
         <h5 className="card-title">BlackList</h5>
         <div className="row">
           <div className="col-8 input-group-sm col-md-10">
-            <input type="text" className="form-control" ref={inputEl} value={valueInput} onChange={onChange} name="addblacklist" id="addblacklist" />
+            <input type="text" onKeyPress={enterDown} className="form-control" ref={inputEl} name="addblacklist" id="addblacklist" />
           </div>
           <div className="col-4 col-md-2">
-            <button type="button" onClick={onClick} className="btn btn-sm btn-primary col-12">add</button>
+            <button type="button" onClick={handleAddItem} className="btn btn-sm btn-primary col-12">add</button>
           </div>
           {(blackList.length > 0) && (
           <div className="list-group col-12 pl-3 mt-3">

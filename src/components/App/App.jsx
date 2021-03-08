@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Filter from '../Filter/Filter';
 import Answer from '../Answer/Answer';
 
 function App() {
-  const [answer, setAnswer] = useState({ result: 'notQuery' });
-
   return (
     <div className="container">
       <div className="row">
-        <Filter setAnswer={setAnswer} />
+        <Filter />
       </div>
       <div className="row">
-        <Answer data={answer} />
+        <Answer />
       </div>
     </div>
+
   );
 }
 
 export default App;
+
+/*
+
+      <div className="row">
+        <Answer />
+      </div>
+*/
