@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import App from './components/App/App';
 //  import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -10,11 +10,8 @@ import reducers from './reducers/index';
 import thunk from './middleware/thunk';
 import initState from './initState';
 
-/* eslint-disable no-underscore-dangle */
 const store = createStore(reducers, initState,
-  compose(applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
-/* eslint-enable */
+  applyMiddleware(thunk));
 
 ReactDOM.render(
   <React.StrictMode>

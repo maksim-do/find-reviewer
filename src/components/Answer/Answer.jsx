@@ -19,8 +19,3 @@ const Answer = () => {
   );
 };
 export default Answer;
-
-/*
-<AnswerCardCurrentUser />
-      <AnswerCardReviewer />
-      */

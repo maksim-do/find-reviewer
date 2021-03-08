@@ -17,10 +17,3 @@ function App() {
 }
 
 export default App;
-
-/*
-
-      <div className="row">
-        <Answer />
-      </div>
-*/
