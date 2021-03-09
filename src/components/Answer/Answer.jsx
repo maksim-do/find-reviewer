@@ -7,7 +7,7 @@ import AnswerNotAnswer from './AnswerNotAnswer';
 
 // компонент отрисовывающий результаты поиска ревьювера
 const Answer = () => {
-  const requestState = useSelector((state) => state.answerUIState);
+  const requestState = useSelector((state) => state.answerState);
   if (requestState === null) return null;
   if (requestState === 'failure') return <AnswerNotAnswer text="Something went wrong" />;
   return (

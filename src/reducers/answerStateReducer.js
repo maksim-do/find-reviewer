@@ -1,4 +1,4 @@
-const answerUIStateReducer = (state = null, action) => {
+const answerStateReducer = (state = null, action) => {
   switch (action.type) {
     case 'TASK_UPDATE_SUCCESS':
       return 'success';
@@ -9,4 +9,4 @@ const answerUIStateReducer = (state = null, action) => {
   }
 };
 
-export default answerUIStateReducer;
+export default answerStateReducer;
