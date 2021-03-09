@@ -4,10 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import getAnswerData from '../../servises/getAnswerData';
 
 const FilterSubmit = () => {
-  const stateApp = useSelector((state) => state);
+  const requestState = useSelector((state) => state.requestState);
+  const filterData = useSelector((state) => state.filterData);
   const dispatch = useDispatch();
-  const { requestState } = stateApp;
-  const { filterData } = stateApp;
   const { user, repo } = filterData;
   const isInvalidValueInputs = user === '' || repo === '';
   const disabled = requestState === 'request' || isInvalidValueInputs;
