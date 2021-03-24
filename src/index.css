@@ -6,8 +6,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-.fullHeight {
-  max-height: 100vh;
-  max-width: 100vh;
-}
