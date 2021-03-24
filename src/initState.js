@@ -13,7 +13,7 @@ const state = {
     contributors: [],
     users: [],
   },
-  answerUIState: null,
+  answerState: null,
   requestState: null,
 };
 
